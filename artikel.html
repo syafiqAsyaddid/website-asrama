@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="assets/images/logo-ekasari.png" type="image/png">
+  <title>Info &amp; Berita – Asrama IPB Ekasari</title>
+  <link rel="canonical" href="https://asramaekasari.com/artikel.html" id="canonical-tag">
+  <meta name="description" content="Baca info dan berita terbaru dari Asrama IPB Ekasari – hunian mahasiswa swakelola di pusat Kota Bogor." id="meta-description">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Asrama IPB Ekasari">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://asramaekasari.com/artikel.html">
+  <meta property="og:title" content="Info &amp; Berita – Asrama IPB Ekasari">
+  <meta property="og:description" content="Baca info dan berita terbaru dari Asrama IPB Ekasari.">
+  <meta property="og:image" content="https://asramaekasari.com/assets/images/logo-ekasari.png">
+
+  <!-- JSON-LD: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Beranda", "item": "https://asramaekasari.com/"},
+      {"@type": "ListItem", "position": 2, "name": "Berita", "item": "https://asramaekasari.com/artikel.html"}
+    ]
+  }
+  </script>
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Google Fonts: preconnect untuk performa lebih cepat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"></noscript>
+
+  <style>
+    /* Styling extension for detailed article view */
+    body {
+      padding-top: 100px;
+    }
+
+    .article-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 0 5rem;
+    }
+
+    .article-meta-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-top: 0.8rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .article-meta-info i {
+      color: var(--sky);
+    }
+    .article-meta-info span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .article-cover {
+      width: 100%;
+      max-height: 480px;
+      border-radius: var(--radius);
+      object-fit: cover;
+      box-shadow: var(--shadow);
+      border: 4px solid var(--surface);
+      margin-bottom: 2.5rem;
+      display: block;
+    }
+
+    .article-body {
+      font-size: 1.1rem;
+      line-height: 1.85;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+    .article-body p {
+      margin-bottom: 1.5rem;
+    }
+    .article-body strong {
+      color: var(--navy);
+    }
+
+    .article-footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1.5px solid var(--sky-soft);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .share-buttons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .share-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--sky-pale);
+      color: var(--navy);
+      text-decoration: none;
+      transition: var(--transition);
+      border: 1px solid var(--sky-soft);
+      font-size: 1rem;
+    }
+    .share-btn:hover {
+      background: var(--sky);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Recommendation Section */
+    .recommendations-section {
+      padding: 5rem 0;
+      background: var(--sky-pale);
+      position: relative;
+    }
+
+    /* Loading placeholder animation */
+    .skeleton-loader {
+      animation: skeleton-glow 1.5s ease-in-out infinite alternate;
+    }
+    @keyframes skeleton-glow {
+      0% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+    .skeleton-text {
+      height: 1.2rem;
+      background: var(--sky-soft);
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+    .skeleton-title {
+      height: 2.5rem;
+      width: 80%;
+      background: var(--sky-soft);
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    .skeleton-img {
+      height: 350px;
+      width: 100%;
+      background: var(--sky-soft);
+      border-radius: var(--radius);
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    (function () {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.body.classList.add('dark-theme');
+      }
+    })();
+  </script>
+
+  <!-- BACKGROUND GLOWS -->
+  <div class="bg-glow-1"></div>
+  <div class="bg-glow-2"></div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar" class="scrolled">
+    <div class="container nav-inner">
+      <a href="/" class="logo">
+        <img src="assets/images/logo-ekasari.png" alt="Logo Asrama IPB Ekasari">
+        <span>Asrama IPB Ekasari</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="/">Beranda</a></li>
+        <li><a href="tentang.html">Tentang</a></li>
+        <li><a href="fasilitas.html">Fasilitas</a></li>
+        <li><a href="kegiatan.html">Kegiatan</a></li>
+        <li><a href="prestasi.html">Prestasi</a></li>
+        <li><a href="alumni.html">Alumni</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Ubah Tema">
+          <i class="bi bi-moon-fill"></i>
+        </button>
+        <button class="nav-toggle">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN ARTICLE CONTAINER -->
+  <main class="container">
+    <div class="article-wrapper">
+      
+      <!-- Placeholder Loader -->
+      <div id="article-placeholder">
+        <div class="skeleton-loader">
+          <div class="skeleton-text" style="width: 100px;"></div>
+          <div class="skeleton-title"></div>
+          <div class="skeleton-text" style="width: 250px; margin-bottom: 2rem;"></div>
+          <div class="skeleton-img"></div>
+          <div class="skeleton-text"></div>
+          <div class="skeleton-text"></div>
+          <div class="skeleton-text" style="width: 90%;"></div>
+        </div>
+      </div>
+
+      <!-- Real Article Content (Hidden at first) -->
+      <article id="article-content" style="display: none;">
+        <span class="section-label" style="text-align: left; margin-bottom: 0.8rem;">Info & Berita Ekasari</span>
+        <h1 id="art-title">Judul Berita</h1>
+        
+        <div class="article-meta-info">
+          <span><i class="bi bi-calendar3"></i> <span id="art-date">Tanggal</span></span>
+        </div>
+
+        <img id="art-cover" src="assets/images/logo-ekasari.png" alt="Cover Berita" class="article-cover" onerror="this.style.display='none'">
+
+        <div id="art-body" class="article-body">
+          <!-- Dynamically populated body -->
+        </div>
+
+        <div class="article-footer">
+          <a href="index.html" class="btn btn-outline" style="padding: 0.65rem 1.4rem; font-size: 0.9rem;">
+            <i class="bi bi-arrow-left"></i> Kembali ke Beranda
+          </a>
+          
+          <div class="share-buttons">
+            <span style="font-weight: 600; font-size: 0.9rem; color: var(--navy); margin-right: 5px;">Bagikan:</span>
+            <a href="#" id="share-wa" target="_blank" class="share-btn" title="Bagikan ke WhatsApp"><i class="bi bi-whatsapp"></i></a>
+            <a href="#" id="share-fb" target="_blank" class="share-btn" title="Bagikan ke Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" id="share-twitter" target="_blank" class="share-btn" title="Bagikan ke X (Twitter)"><i class="bi bi-twitter-x"></i></a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- RECOMMENDATION SECTION -->
+  <section class="recommendations-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Rekomendasi</span>
+        <h2>Berita <span class="text-sky">Ekasari Lainnya</span></h2>
+      </div>
+      <div id="recommendations-grid" class="explore-grid">
+        <!-- Dynamically populated recommendation cards -->
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">
+            <img src="assets/images/logo-ekasari.png" alt="Logo">
+            Asrama IPB Ekasari
+          </div>
+          <p>"Ekasari is a Sweet Home and Whatever So Homely". Hunian nyaman dan inspiratif untuk generasi berprestasi sejak 1957.</p>
+        </div>
+        <div>
+          <h4>Navigasi</h4>
+          <ul>
+            <li><a href="tentang.html">Profil & Lokasi</a></li>
+            <li><a href="fasilitas.html">Fasilitas</a></li>
+            <li><a href="kegiatan.html">Kegiatan Rutin</a></li>
+            <li><a href="prestasi.html">Warga Berprestasi</a></li>
+            <li><a href="alumni.html">Alumni</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Kontak</h4>
+          <ul>
+            <li><a href="https://maps.google.com/?q=Asrama%20IPB%20Ekasari%20Sempur%20Bogor" target="_blank">Jl. Sempur No. 22, Bogor</a></li>
+            <li><a href="https://instagram.com/ekasari_official" target="_blank">@ekasari_official</a></li>
+            <li><a href="mailto:ekasarifoundation22@gmail.com">ekasarifoundation22@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">&copy; 2026 Asrama IPB Ekasari. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/script.js"></script>
+  <script src="js/db.js"></script>
+  
+  <script>
+    window.addEventListener('DOMContentLoaded', async () => {
+      // Get article ID from URL query parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const articleId = urlParams.get('id');
+
+      if (!articleId) {
+        // Redirect to index page if no article ID is present
+        window.location.href = 'index.html';
+        return;
+      }
+
+      try {
+        // Load target article
+        const article = await window.ekasariDb.getNewsById(articleId);
+
+        if (!article) {
+          // If not found, show error inside page
+          document.getElementById('article-placeholder').innerHTML = `
+            <div style="text-align:center; padding: 4rem 0;">
+              <i class="bi bi-file-earmark-break-fill text-sky" style="font-size: 4rem;"></i>
+              <h2 style="margin-top:1.5rem;">Artikel Tidak Ditemukan</h2>
+              <p style="color:var(--text-muted); margin-bottom:2rem;">Artikel yang Anda cari mungkin telah dihapus atau dipindahkan.</p>
+              <a href="index.html" class="btn btn-primary">Kembali ke Beranda</a>
+            </div>
+          `;
+          return;
+        }
+
+        // Populate article elements
+        document.getElementById('art-title').textContent = article.title;
+        document.getElementById('art-date').textContent = formatDateIndo(article.date);
+        document.getElementById('art-cover').src = article.image;
+        document.getElementById('art-cover').alt = article.title;
+        document.getElementById('art-body').innerHTML = article.content;
+        
+
+
+        // Update document title dan meta tags secara dinamis
+        document.title = `${article.title} – Asrama IPB Ekasari`;
+
+        // Update canonical tag
+        const canonicalTag = document.getElementById('canonical-tag');
+        if (canonicalTag) canonicalTag.setAttribute('href', window.location.href);
+
+        // Update meta description
+        const metaDesc = document.getElementById('meta-description');
+        if (metaDesc) metaDesc.setAttribute('content', article.summary || article.title);
+
+        // Update og:title dan og:url
+        const ogTitle = document.querySelector('meta[property="og:title"]');
+        if (ogTitle) ogTitle.setAttribute('content', `${article.title} – Asrama IPB Ekasari`);
+        const ogUrl = document.querySelector('meta[property="og:url"]');
+        if (ogUrl) ogUrl.setAttribute('content', window.location.href);
+        const ogDesc = document.querySelector('meta[property="og:description"]');
+        if (ogDesc) ogDesc.setAttribute('content', article.summary || article.title);
+
+        // Set up Social Share Links
+        const pageUrl = encodeURIComponent(window.location.href);
+        const pageText = encodeURIComponent(article.title);
+        
+        document.getElementById('share-wa').href = `https://api.whatsapp.com/send?text=${pageText}%20${pageUrl}`;
+        document.getElementById('share-fb').href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+        document.getElementById('share-twitter').href = `https://twitter.com/intent/tweet?url=${pageUrl}&text=${pageText}`;
+
+        // Switch panel visibility
+        document.getElementById('article-placeholder').style.display = 'none';
+        document.getElementById('article-content').style.display = 'block';
+
+        // Load recommendation articles
+        renderRecommendations(articleId);
+
+      } catch (err) {
+        console.error('Error loading article:', err);
+        document.getElementById('article-placeholder').innerHTML = `
+          <div style="text-align:center; padding: 4rem 0; color: var(--danger);">
+            <i class="bi bi-exclamation-triangle-fill" style="font-size: 4rem;"></i>
+            <h2 style="margin-top:1.5rem;">Gagal Memuat Artikel</h2>
+            <p>Terjadi kesalahan koneksi database.</p>
+          </div>
+        `;
+      }
+    });
+
+    // Function to load recommendations (excluding current article)
+    async function renderRecommendations(currentId) {
+      const recContainer = document.getElementById('recommendations-grid');
+      
+      try {
+        const news = await window.ekasariDb.getNews();
+        
+        // Filter out current article and sort by date desc
+        const list = news
+          .filter(item => item.id !== currentId)
+          .sort((a, b) => new Date(b.date) - new Date(a.date))
+          .slice(0, 3); // Get top 3 recommendations
+
+        if (list.length === 0) {
+          // If no recommendations, hide the entire section
+          document.querySelector('.recommendations-section').style.display = 'none';
+          return;
+        }
+
+        let html = '';
+        list.forEach(item => {
+          html += `
+            <a href="artikel.html?id=${item.id}" class="explore-card">
+              <img src="${item.image}" alt="${item.title}">
+              <div class="explore-overlay">
+                <h3>${item.title}</h3>
+                <p>${formatDateIndo(item.date)}</p>
+              </div>
+              <div class="explore-arrow"><i class="bi bi-arrow-right"></i></div>
+            </a>
+          `;
+        });
+        recContainer.innerHTML = html;
+
+      } catch (err) {
+        console.warn('Failed to render recommendations:', err);
+      }
+    }
+
+    function formatDateIndo(dateStr) {
+      if (!dateStr) return '';
+      const parts = dateStr.split('-');
+      if (parts.length !== 3) return dateStr;
+      
+      const day = parseInt(parts[2]);
+      const monthIndex = parseInt(parts[1]) - 1;
+      const year = parts[0];
+
+      const months = [
+        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
+        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+      ];
+
+      return `${day} ${months[monthIndex]} ${year}`;
+    }
+  </script>
+</body>
+
+</html>
