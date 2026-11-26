@@ -85,9 +85,19 @@
       line-height: 1.85;
       color: var(--text);
       letter-spacing: -0.01em;
+      text-align: justify;
+      text-justify: inter-word;
+    }
+    .article-body p,
+    .article-body div,
+    .article-body li {
+      text-align: justify !important;
     }
     .article-body p {
       margin-bottom: 1.5rem;
+    }
+    .article-body p:last-child {
+      margin-bottom: 0;
     }
     .article-body strong {
       color: var(--navy);
@@ -340,7 +350,7 @@
         document.getElementById('art-date').textContent = formatDateIndo(article.date);
         document.getElementById('art-cover').src = article.image;
         document.getElementById('art-cover').alt = article.title;
-        document.getElementById('art-body').innerHTML = article.content;
+        document.getElementById('art-body').innerHTML = formatArticleContent(article.content);
         
 
 
@@ -427,6 +437,21 @@
       } catch (err) {
         console.warn('Failed to render recommendations:', err);
       }
+    }
+
+    function formatArticleContent(rawContent) {
+      if (!rawContent) return '';
+      const trimmed = rawContent.trim();
+      if (/<(p|div|ul|ol|h[1-6]|blockquote)\b/i.test(trimmed)) {
+        return trimmed;
+      }
+      return trimmed
+        .replace(/\r\n/g, '\n')
+        .split(/(?:<br\s*\/?>\s*){2,}|\n\s*\n/i)
+        .map(paragraph => paragraph.trim())
+        .filter(Boolean)
+        .map(paragraph => `<p>${paragraph.replace(/\n/g, '<br>')}</p>`)
+        .join('');
     }
 
     function formatDateIndo(dateStr) {
